@@ -1,0 +1,2 @@
+# for console handlers
+pywin32>300,<400

@@ -1,0 +1,2 @@
+shmlock[membar]>=4.4.2, < 6.0
+msgpack>=1.1, < 2.0
