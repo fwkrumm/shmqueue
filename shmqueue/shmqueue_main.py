@@ -12,8 +12,8 @@ import tempfile
 import weakref
 
 if os.name == "nt":
-    import win32api
-    import win32con
+    import win32api  # pylint: disable=import-error
+    import win32con  # pylint: disable=import-error
 
 # pylint: disable=wrong-import-position
 from shmqueue.base_logger import ShmModuleBaseLogger
