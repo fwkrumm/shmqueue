@@ -1,0 +1,72 @@
+name: Weekly Latest Python Check
+
+on:
+  schedule:
+    - cron: '0 12 * * 1' # Every Monday at 12:00 UTC
+
+# Only one weekly run at a time; cancel any stale in-progress run.
+concurrency:
+  group: weekly-latest-python
+  cancel-in-progress: true
+
+# Minimal token permissions.
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # Run tests against the newest stable Python to catch upstream compatibility issues.
+    name: Test (latest Python / ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest, ubuntu-22.04-arm, ubuntu-24.04-arm]
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up latest stable Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+          cache: pip
+
+      - name: Install Windows-specific dependencies
+        # pywin32 is required for signal handling on Windows (see shmqueue platform notes).
+        if: runner.os == 'Windows'
+        run: pip install pywin32
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage
+
+      - name: Run tests with coverage
+        run: |
+          python -m coverage run -m unittest discover
+          coverage report -m
+
+  lint:
+    # Lint check against the newest stable Python to catch new warnings early.
+    name: Pylint (latest Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up latest stable Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pylint
+
+      - name: Run Pylint
+        run: |
+          pylint --rcfile=.pylintrc shmqueue
+          pylint --rcfile=.pylintrc tests

@@ -1,0 +1,48 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project]
+name = "shmqueue"
+dynamic = ["version"]
+description = "This module provides an inter-process lock implementation, eliminating the need to pass around objects for synchronization. Under the hood, the module leverages the shared_memory module."
+long_description = "file: README.md"
+long_description_content_type = "text/markdown"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Fabian Krumm", email = "ghub_fk@gmx.de" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "shmlock[membar]>=4.4.2,<6.0",
+    "msgpack>=1.1,<2.0",
+    "pywin32>300,<400; platform_system == 'Windows'",
+]
+
+[project.optional-dependencies]
+membar = [
+    "pymembar"
+]
+
+[tool.pdm.build]
+source-includes = [
+    "tests/",
+    "requirements.txt",
+]
+
+[tool.pdm]
+version = { source = "file", path = "shmqueue/__init__.py" }
+distribution = true
+
+[project.urls]
+homepage = "https://github.com/fwkrumm/shmqueue"

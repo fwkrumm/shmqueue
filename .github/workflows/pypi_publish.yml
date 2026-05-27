@@ -1,0 +1,49 @@
+name: Publish to PyPI
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      # Also trigger on version tags (e.g. v1.2.3) for explicit release control.
+      - "v*.*.*"
+
+# Minimal token permissions.
+# id-token write is required for PyPI Trusted Publishing (OIDC — no stored secrets needed).
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-and-publish:
+    name: Build and publish to PyPI
+    # The 'pypi-release' environment can require manual approval before publishing.
+    environment: pypi-release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install build tools
+        run: pip install build
+
+      - name: Rewrite relative image URLs in README for PyPI display
+        # PyPI cannot resolve relative paths; replace with absolute GitHub raw URLs
+        # so images render correctly on the PyPI project page.
+        run: |
+          sed -i 's|(./docs/assets/|(https://raw.githubusercontent.com/fwkrumm/shmqueue/master/docs/assets/|g' README.md
+
+      - name: Build distribution packages (sdist + wheel)
+        run: python -m build
+
+      - name: Publish to PyPI via Trusted Publishing
+        # Uses OIDC — no PYPI_API_TOKEN secret required.
+        # Configure the trusted publisher once at:
+        # https://pypi.org/manage/project/shmqueue/settings/publishing/
+        uses: pypa/gh-action-pypi-publish@release/v1
