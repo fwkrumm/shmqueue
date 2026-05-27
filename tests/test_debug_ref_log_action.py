@@ -9,7 +9,7 @@ import shmqueue
 from shmqueue.exceptions import ShmQueueNotInitializedError, ShmQueueValueError
 from shmqueue.shared_memory_collection import DebugRefLogAction
 
-QUEUE_NAME_BASE = "test_drl"
+QUEUE_NAME_BASE = "drl"
 BUFFER_SIZE = shmqueue.SYSTEM_PAGESIZE
 
 

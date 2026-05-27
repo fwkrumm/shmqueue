@@ -9,7 +9,7 @@ import unittest
 import shmqueue
 from shmqueue.exceptions import ShmQueueEmpty, ShmQueueFull
 
-QUEUE_NAME_BASE = "test_block_timeout"
+QUEUE_NAME_BASE = "tbt"
 DATA = b"hello"
 
 # buffer just large enough for a small number of items so we can fill it quickly
