@@ -8,8 +8,8 @@
 - [Quick Dive](#quick-dive)
 - [Serialization](#serialization)
 - [Troubleshooting and Known Issues](#troubleshooting-and-known-issues)
-- [ToDos](#todos)
 - [Release History](#release-history)
+- [ToDos](#todos)
 
 ---
 <a name="about"></a>
