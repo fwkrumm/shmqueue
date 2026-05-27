@@ -195,7 +195,7 @@ class MultiprocessingTest(unittest.TestCase):
         data : any
             the data to add to the queue
         """
-        self.assertEqual(mp_queue.qsize(), 0, "queue should be empty before adding data")
+        self.assertTrue(mp_queue.empty(), "queue should be empty before adding data")
         # print(time.perf_counter(), "DEBUG: adding data of length", len(data), "to queue")
         s = shmqueue.ShmQueue(TEST_QUEUE_NAME)
         old_size = s.qsize()
