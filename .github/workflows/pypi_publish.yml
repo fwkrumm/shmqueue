@@ -47,3 +47,5 @@ jobs:
         # Configure the trusted publisher once at:
         # https://pypi.org/manage/project/shmqueue/settings/publishing/
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip_existing: true

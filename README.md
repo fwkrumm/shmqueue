@@ -9,9 +9,11 @@
 - [Serialization](#serialization)
 - [Troubleshooting and Known Issues](#troubleshooting-and-known-issues)
 - [ToDos](#todos)
+- [Release History](#release-history)
 
 ---
 <a name="about"></a>
+<a id="about"></a>
 
 ## About
 
@@ -23,6 +25,7 @@ This module is currently under development and may undergo frequent changes on t
 
 ---
 <a name="when-to-use"></a>
+<a id="when-to-use"></a>
 
 ## When to Use
 
@@ -40,6 +43,7 @@ This module is currently under development and may undergo frequent changes on t
 
 ---
 <a name="installation"></a>
+<a id="installation"></a>
 
 ## Installation
 
@@ -54,6 +58,7 @@ On Windows, optionally install `pywin32` for console signal handling (`set_conso
 
 ---
 <a name="quick-dive"></a>
+<a id="quick-dive"></a>
 
 ## Quick Dive
 
@@ -135,6 +140,7 @@ q.set_console_handlers(register_atexit=True)
 
 ---
 <a name="serialization"></a>
+<a id="serialization"></a>
 
 ## Serialization
 
@@ -183,6 +189,7 @@ assert q.get() == 42
 
 ---
 <a name="troubleshooting-and-known-issues"></a>
+<a id="troubleshooting-and-known-issues"></a>
 
 ## Troubleshooting and Known Issues
 
@@ -202,8 +209,23 @@ q = shmqueue.ShmQueue("my_queue", track_resources=True)
 
 If a process is killed during a `put`/`get`, the internal `shmlock` mutex may remain locked. Call `set_console_handlers()` and/or `register_atexit=True` to mitigate this. See the [`shmlock` README](https://github.com/fwkrumm/shmlock) for details on the underlying lock behavior.
 
+
+---
+<a name="release-history"></a>
+<a id="release-history"></a>
+
+## Release History
+
+### 0.0.2
+- Fix README anchors for correct PyPI rendering
+
+### 0.0.1
+- Initial release
+
+
 ---
 <a name="todos"></a>
+<a id="todos"></a>
 
 ## ToDos
 
