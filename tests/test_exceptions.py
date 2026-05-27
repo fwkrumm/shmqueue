@@ -35,7 +35,7 @@ def _fill_queue(q: shmqueue.ShmQueue):
             return count
 
 
-class _Unserializable:
+class _Unserializable:  # pylint: disable=too-few-public-methods
     """A class that msgpack cannot serialize."""
 
 
@@ -81,7 +81,8 @@ class TestPutExceptions(unittest.TestCase):
             q.put(oversized)
 
     def test_serialization_error_no_pickle(self):
-        """Non-msgpack-serializable object with pickle disabled raises ShmQueueSerializationError."""
+        """Non-msgpack-serializable object with pickle disabled
+        raises ShmQueueSerializationError."""
         q = shmqueue.ShmQueue(f"{QUEUE_NAME_BASE}_ser_err",
                               buffer_size=BUFFER_SIZE,
                               allow_pickle=False)
@@ -98,7 +99,8 @@ class TestGetExceptions(unittest.TestCase):
             q.get(block=False)
 
     def test_deserialization_error_no_pickle(self):
-        """Getting a pickle-serialized item when pickle is disabled raises ShmQueueDeserializationError."""
+        """Getting a pickle-serialized item when pickle is disabled
+        raises ShmQueueDeserializationError."""
         # write side: pickle allowed so we can put the object
         q_writer = shmqueue.ShmQueue(f"{QUEUE_NAME_BASE}_deser_err",
                                      buffer_size=BUFFER_SIZE,
@@ -115,6 +117,7 @@ class TestGetExceptions(unittest.TestCase):
 
 class TestNotInitializedError(unittest.TestCase):
     """ShmQueueNotInitializedError is raised when ref_data is None."""
+    # pylint: disable=protected-access
 
     def test_clear_after_shutdown(self):
         """Calling clear() on an already-shutdown collection raises ShmQueueNotInitializedError."""
@@ -136,6 +139,7 @@ class TestNotInitializedError(unittest.TestCase):
 
 class TestRuntimeError(unittest.TestCase):
     """ShmQueueRuntimeError is raised when internal state is inconsistent."""
+    # pylint: disable=protected-access
 
     def test_reduce_ref_counter_when_ref_count_is_zero(self):
         """Forcing ref_count to 0 and calling reduce_ref_counter raises ShmQueueRuntimeError."""

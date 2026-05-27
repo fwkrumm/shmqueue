@@ -1,12 +1,10 @@
 """
 tests of basics (lock/release) of shmlock package
 """
-from multiprocessing import shared_memory
 import multiprocessing.synchronize
 import time
 import unittest
-import logging
-import sys
+
 import msgpack
 import shmqueue
 from shmqueue import SIZE_HEADER
@@ -56,7 +54,9 @@ def multiple_worker():
     cnt = 0
     while cnt < RUNS_ASYNC:
         try:
-            s.put(ASYNC_TEST_DATA, serialization_method=shmqueue.SerializationMethods.DEFAULT, block=False)
+            s.put(ASYNC_TEST_DATA,
+                  serialization_method=shmqueue.SerializationMethods.DEFAULT,
+                  block=False)
             cnt += 1
         except shmqueue.exceptions.ShmQueueFull:
             # catch explicitly here so that the loop finishes after RUNS_ASYNC runs,
@@ -146,7 +146,7 @@ class MultiprocessingTest(unittest.TestCase):
         """
 
         # to assure we have enough memory for the test, we calculate the size required
-        size_required = sum([len(list(range(num))) for num in range(NUM_PROCS)]) \
+        size_required = sum(len(list(range(num))) for num in range(NUM_PROCS)) \
             + SIZE_HEADER * NUM_PROCS
         # size will be rounded to at least being the system pagesize
         s = shmqueue.ShmQueue(TEST_QUEUE_NAME, buffer_size=size_required)
@@ -202,7 +202,7 @@ class MultiprocessingTest(unittest.TestCase):
         # print(time.perf_counter(), "DEBUG: old size of queue is", old_size)
         mp_queue.put(data)
         # print(time.perf_counter(), "DEBUG: data added to queue, waiting for it to be processed")
-        while not s.qsize() == old_size + 1:
+        while s.qsize() != old_size + 1:
             # waiting until data have been put to shm queue, for this test we check that order
             # is maintained. infinite loop at the moment, add timeout later
             time.sleep(0.01)

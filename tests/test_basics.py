@@ -1,22 +1,21 @@
 """
 tests of basics (lock/release) of shmlock package
 """
-import sys
-from multiprocessing import shared_memory
+import gc
+import pickle
 import time
 import unittest
-import logging
-import shmqueue
-import pickle
-import gc
-import msgpack
 from queue import Empty, Full
+
+import msgpack
+
+import shmqueue
 
 
 # for debug
 #logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 
-class testclass:
+class testclass:  # pylint: disable=invalid-name,too-few-public-methods
     """
     simple test class to test put/get methods of shmqueue
     """
@@ -285,7 +284,8 @@ class FullTest(unittest.TestCase):
 
     Item: b'\\x00' * 6  →  msgpack bin8: 0xc4 0x06 + 6 bytes = 8 bytes payload
     In-buffer size: SIZE_HEADER(8) + 8 = 16 bytes
-    Count to fill one page: SYSTEM_PAGESIZE // 16  (always integer since page size is power-of-2 ≥ 4096)
+    Count to fill one page: SYSTEM_PAGESIZE // 16  (always integer since
+    page size is power-of-2 ≥ 4096)
     """
 
     # item whose msgpack serialization is exactly 8 bytes (bin8 format)

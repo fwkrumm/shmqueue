@@ -38,6 +38,7 @@ class TestDebugRefLogActionEnum(unittest.TestCase):
 
 class TestDebugRefLog(unittest.TestCase):
     """Tests for ShmCollection.debug_ref_log() with DebugRefLogAction."""
+    # pylint: disable=protected-access
 
     def test_invalid_action_type_raises_value_error(self):
         """Passing a plain string instead of the enum raises ShmQueueValueError."""

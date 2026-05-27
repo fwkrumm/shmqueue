@@ -1,19 +1,18 @@
 """
 tests of basics (lock/release) of shmlock package
 """
-from multiprocessing import shared_memory
+import queue
+import struct
 import time
 import unittest
-import shmqueue
-import struct
-import queue
 
+import shmqueue
 from shmqueue import SerializationMethods
 
 TEST_QUEUE_NAME = "test_serialization_queue"
 
 # for pickle
-class testclass:
+class testclass:  # pylint: disable=invalid-name,too-few-public-methods
     """
     simple test class to test put/get methods of shmqueue
     """
