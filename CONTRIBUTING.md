@@ -7,7 +7,7 @@ Thank you for considering contributing to this project! We welcome all contribut
 You can contribute in one of two ways:
 
 ### Option 1: Branch & Pull Request
-1. **Create a new branch** from the `main` branch.
+1. **Create a new branch** from the `master` branch.
 2. Make your changes.
 3. Ensure your contribution follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 4. **Open a Pull Request** with a clear description of your changes.
