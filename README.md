@@ -47,11 +47,18 @@ This module is currently under development and may undergo frequent changes on t
 
 ## Installation
 
+You can install shmqueue either via pip from pypi
+
 ```
-git clone <repo-url>
+pip install shmqueue
+```
+
+or directly from the repository
+
+```
+git clone https://github.com/fwkrumm/shmqueue.git
 cd shmqueue
-pip install -r requirements.txt
-pip install .
+pip install . -r requirements.txt
 ```
 
 On Windows, optionally install `pywin32` for console signal handling (`set_console_handlers()`).
