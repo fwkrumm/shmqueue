@@ -1,6 +1,7 @@
 name: Weekly Latest Python Check
 
 on:
+  workflow_dispatch:  # Allow manual triggering
   schedule:
     - cron: '0 12 * * 1' # Every Monday at 12:00 UTC
 
