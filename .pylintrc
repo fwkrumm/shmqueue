@@ -22,8 +22,12 @@ persistent=no
 # usually to register additional checkers.
 load-plugins=
 
-# Use multiple processes to speed up Pylint.
-jobs=4
+# Parallel Pylint workers serialize the linter with dill. On Python 3.15,
+# this crashes when dill accesses the removed code.co_lnotab attribute.
+# jobs=1 bypasses worker serialization while keeping all lint checks enabled.
+# Both CI workflows use this config; keep serial mode until dill supports
+# the newest Python version used by CI.
+jobs=1
 
 # Allow loading of arbitrary C extensions. Extensions are imported into the
 # active Python interpreter and may run arbitrary code.
